@@ -18,7 +18,7 @@ class Incomes(Base):
     data = Column(DateTime, default=datetime.now)
     sum = Column(Integer)
 class Consumptions(Base):
-    __tablename__="Cons"
+    __tablename__="Consumptions"
     id = Column(Integer, primary_key=True)
     UId = Column(Integer)
     sum = Column(Integer)

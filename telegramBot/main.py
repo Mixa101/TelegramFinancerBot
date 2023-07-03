@@ -1,6 +1,8 @@
 from aiogram import Bot, Dispatcher, executor
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher.filters import Text
+from models import Base
+from db_map import engine
 from handlers import (
     start_handler,
     set_capital,
@@ -13,14 +15,19 @@ from handlers import (
     show_incomes,
     show_capital,
 )
-from config import TOKEN
+from config import TOKEN, DB_FILENAME
 from keyboards import start_kbd
 from states import Form
+import os
 
 # Инициализация Telegram Bot
 storage = MemoryStorage()
 bot = Bot(token=TOKEN)
 dp = Dispatcher(bot, storage=storage)
+
+
+if not os.path.isfile(f"./{DB_FILENAME}"):
+    Base.metadata.create_all(engine)
 
 # Регистрация хэндлеров
 dp.register_message_handler(start_handler, commands=['start'])

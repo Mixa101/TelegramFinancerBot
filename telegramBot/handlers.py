@@ -14,10 +14,10 @@ async def start_handler(message: types.Message, state: FSMContext):
         await message.answer("You're already registered", reply_markup=main_kbd)
         await state.reset_state()
     else:
+        await state.update_data(ID=user_id)
         await state.set_state(Form.ID)
         print(f"[ log ] {user_id}, started registration")
-        await message.answer("Hello, I'm the Financer bot. Would you like to start?", reply_markup=start_kbd)
-
+        await message.answer("Enter your capital: ")
 
 async def set_capital(message: types.Message, state: FSMContext):
     await check_if_integer(message, state, "capital")
